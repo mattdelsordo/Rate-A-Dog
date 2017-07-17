@@ -1,4 +1,4 @@
-package com.mdelsord.rate_a_dog;
+package com.mdelsordo.rate_a_dog;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

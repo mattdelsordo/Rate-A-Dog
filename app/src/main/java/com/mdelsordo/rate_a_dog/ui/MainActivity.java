@@ -1,9 +1,10 @@
-package com.mdelsord.rate_a_dog;
+package com.mdelsordo.rate_a_dog.ui;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Window;
+
+import com.mdelsordo.rate_a_dog.R;
 
 public class MainActivity extends AppCompatActivity {
 

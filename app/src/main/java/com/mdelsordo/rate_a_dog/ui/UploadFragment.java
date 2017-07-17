@@ -1,4 +1,4 @@
-package com.mdelsord.rate_a_dog;
+package com.mdelsordo.rate_a_dog.ui;
 
 
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.mdelsordo.rate_a_dog.R;
 
 
 /**
