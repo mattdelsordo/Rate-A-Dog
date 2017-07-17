@@ -11,6 +11,7 @@
         android:src="@drawable/ic_sound_on"
         android:layout_margin="10dp"/>
 
+    <!-- TODO: make a nice header logo type banner instead of just simple text -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

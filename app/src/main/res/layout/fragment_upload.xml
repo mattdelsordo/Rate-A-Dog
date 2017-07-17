@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mdelsord.rate_a_dog.UploadFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upload_image"
+            android:id="@+id/b_upload_library"
+            android:drawableLeft="@drawable/ic_upload"
+            android:layout_margin="4dp"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/take_photo"
+            android:id="@+id/b_upload_camera"
+            android:layout_margin="4dp"
+            android:drawableLeft="@drawable/ic_camera"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

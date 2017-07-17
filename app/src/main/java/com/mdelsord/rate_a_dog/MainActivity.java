@@ -17,7 +17,10 @@ public class MainActivity extends AppCompatActivity {
         //put fragments where they're meant to go
         FragmentManager manager = getSupportFragmentManager();
         if(manager.findFragmentById(R.id.fl_main_header) == null){
-            manager.beginTransaction().add(R.id.fl_main_advert, new HeaderFragment()).commit();
+            manager.beginTransaction().add(R.id.fl_main_header, new HeaderFragment()).commit();
+        }
+        if(manager.findFragmentById(R.id.fl_main_app) == null){
+            manager.beginTransaction().add(R.id.fl_main_app, new UploadFragment()).commit();
         }
     }
 }
