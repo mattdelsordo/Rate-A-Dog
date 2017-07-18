@@ -7,4 +7,4 @@
 /build
 /captures
 .externalNativeBuild
-/app/src/main/res/values/auth.xml
+/app/src/main/java/com/mdelsordo/rate_a_dog/util

@@ -7,4 +7,5 @@
     <string name="upload_image">Upload Image</string>
     <string name="rate_this_dog">Rate this dog</string>
     <string name="choose_another_dog">Back</string>
+    <string name="now_rating_dog">Rating your dog...</string>
 </resources>

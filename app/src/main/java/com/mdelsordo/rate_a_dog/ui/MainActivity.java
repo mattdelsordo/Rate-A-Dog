@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.mdelsordo.rate_a_dog.R;
 
-public class MainActivity extends AppCompatActivity implements UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener{
+public class MainActivity extends AppCompatActivity implements UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener, ProcessingFragment.ProccessingListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,17 @@ public class MainActivity extends AppCompatActivity implements UploadFragment.Up
     }
 
     @Override
+    public void confirmFragConfirm(Uri path) {
+        swapFragment(ProcessingFragment.newInstance(path));
+    }
+
+    @Override
     public void confirmImage(Uri uri) {
         swapFragment(ConfirmFragment.newInstance(uri));
+    }
+
+    @Override
+    public void processingBack() {
+        swapFragment(new UploadFragment());
     }
 }

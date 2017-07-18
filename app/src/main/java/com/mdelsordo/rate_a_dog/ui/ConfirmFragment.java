@@ -44,6 +44,7 @@ public class ConfirmFragment extends Fragment {
 
     private ImageView mPhoto;
     private Button mConfirm, mReject;
+    private Uri mPath;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,9 +54,9 @@ public class ConfirmFragment extends Fragment {
 
         mPhoto = (ImageView)view.findViewById(R.id.iv_confirm_photo);
         //set up photo
-        Uri photoPath = Uri.parse(getArguments().getString(ARG_PHOTO));
+        mPath = Uri.parse(getArguments().getString(ARG_PHOTO));
         try{
-            InputStream stream = getContext().getContentResolver().openInputStream(photoPath);
+            InputStream stream = getContext().getContentResolver().openInputStream(mPath);
             mPhoto.setImageBitmap(BitmapFactory.decodeStream(stream));
         }catch (FileNotFoundException e){
             Logger.e(TAG, e.toString());
@@ -68,7 +69,7 @@ public class ConfirmFragment extends Fragment {
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mListener.confirmFragConfirm(mPath);
             }
         });
 
@@ -85,6 +86,7 @@ public class ConfirmFragment extends Fragment {
 
     public interface ConfirmFragListener{
         void confirmFragBack();
+        void confirmFragConfirm(Uri path);
     }
     private ConfirmFragListener mListener;
 
