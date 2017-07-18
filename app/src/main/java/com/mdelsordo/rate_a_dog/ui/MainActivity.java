@@ -1,12 +1,14 @@
 package com.mdelsordo.rate_a_dog.ui;
 
+import android.net.Uri;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mdelsordo.rate_a_dog.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,5 +25,20 @@ public class MainActivity extends AppCompatActivity {
         if(manager.findFragmentById(R.id.fl_main_app) == null){
             manager.beginTransaction().add(R.id.fl_main_app, new UploadFragment()).commit();
         }
+    }
+
+    //swaps fragments in the main fragment zone
+    private void swapFragment(Fragment frag){
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_app, frag).commit();
+    }
+
+    @Override
+    public void confirmFragBack() {
+        swapFragment(new UploadFragment());
+    }
+
+    @Override
+    public void confirmImage(Uri uri) {
+        swapFragment(ConfirmFragment.newInstance(uri));
     }
 }

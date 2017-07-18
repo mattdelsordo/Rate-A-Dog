@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="take_photo">take photo</string>
     <string name="upload_image">Upload Image</string>
+    <string name="rate_this_dog">Rate this dog</string>
+    <string name="choose_another_dog">Back</string>
 </resources>
