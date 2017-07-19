@@ -61,14 +61,14 @@ public class ProcessingFragment extends Fragment {
     }
 
     //handles behavior after getting response from rekognize
-    private void handleRating(boolean isDog){
-        if(isDog){
-            mListener.gotoRatingFrag(mPhotoPath, true);
+    private void handleRating(BoolPair pair){
+        if(pair.hasDog){
+            mListener.gotoRatingFrag(mPhotoPath, pair.isGood);
         }
         else mListener.gotoNoDogFrag();
     }
 
-    private class RateDogAsync extends AsyncTask<String, Void, Boolean>{
+    private class RateDogAsync extends AsyncTask<String, Void, BoolPair>{
 
         @Override
         protected void onPreExecute() {
@@ -77,7 +77,7 @@ public class ProcessingFragment extends Fragment {
         }
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected BoolPair doInBackground(String... params) {
             Uri photoPath = Uri.parse(params[0]);
             try{
                 //get inputstream and convert to bytebuffer
@@ -85,7 +85,15 @@ public class ProcessingFragment extends Fragment {
                 //Bitmap image = BitmapFactory.decodeStream(stream);
                 byte[] bytes = IOUtils.toByteArray(stream);
                 Collection<Label> labels = AWSUtil.detectLabelsTest(bytes, getContext());
-                return AWSUtil.containsDog(labels);
+                boolean hasDog = AWSUtil.containsDog(labels);
+
+                boolean isGood = false;
+                if(hasDog){
+                    isGood = !AWSUtil.detectModerationLabels(bytes, getContext());
+                }
+//                isGood = !AWSUtil.detectModerationLabels(bytes, getContext());
+
+                return new BoolPair(hasDog, isGood);
             }catch(IOException e){
                 e.printStackTrace();
                 return null;
@@ -93,12 +101,12 @@ public class ProcessingFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
+        protected void onPostExecute(BoolPair aBoolPair) {
+            super.onPostExecute(aBoolPair);
             mIsProcessing = false;
             //Toast.makeText(getContext(), "Result: " + aBoolean, Toast.LENGTH_LONG).show();
             //mListener.processingBack();
-            handleRating(aBoolean);
+            handleRating(aBoolPair);
         }
     }
 
@@ -125,5 +133,15 @@ public class ProcessingFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private class BoolPair{
+        public boolean hasDog;
+        public boolean isGood;
+
+        public BoolPair(boolean hasDog, boolean isGood){
+            this.hasDog = hasDog;
+            this.isGood = isGood;
+        }
     }
 }

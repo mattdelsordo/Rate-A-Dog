@@ -11,8 +11,11 @@ import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.AmazonRekognitionClient;
 import com.amazonaws.services.rekognition.model.DetectLabelsRequest;
 import com.amazonaws.services.rekognition.model.DetectLabelsResult;
+import com.amazonaws.services.rekognition.model.DetectModerationLabelsRequest;
+import com.amazonaws.services.rekognition.model.DetectModerationLabelsResult;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.Label;
+import com.amazonaws.services.rekognition.model.ModerationLabel;
 import com.amazonaws.services.s3.model.Region;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
@@ -29,8 +32,9 @@ import java.util.List;
 public class AWSUtil {
     private static String TAG = "AWSUtil";
 
-    private static final float MIN_CONFIDENCE = 80F;
-    private static final int MAX_LABELS = 10;
+    private static final float MIN_CONFIDENCE = 60F;
+    private static final float MIN_CONFIDENCE_EXPLICIT = 50F;
+    private static final int MAX_LABELS = 20;
 
     private static final String COGNITO_POOL_ID = "us-east-1:838d53dc-d050-4e10-8856-0f1c6642c431";
     private static final Regions COGNITO_REGION = Regions.US_EAST_1;
@@ -48,11 +52,6 @@ public class AWSUtil {
 
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
 
-//        AmazonRekognition rekognitionClient = AmazonRekognitionClientBuilder
-//                .standard()
-//                .withRegion(Regions.US_WEST_2)
-//                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-//                .build();
         AmazonRekognition rekognitionClient = new AmazonRekognitionClient(credentials);
 
         DetectLabelsRequest request = new DetectLabelsRequest()
@@ -63,10 +62,10 @@ public class AWSUtil {
         DetectLabelsResult result = rekognitionClient.detectLabels(request);
         List<Label> labels = result.getLabels();
 
-//        System.out.println("Detected labels for image.");
-//        for (Label label: labels) {
-//            Logger.i(TAG, label.getName() + ": " + label.getConfidence().toString());
-//        }
+        Logger.i(TAG, "Detected labels for image.");
+        for (Label label: labels) {
+            Logger.i(TAG, label.getName() + ": " + label.getConfidence().toString());
+        }
 
         return labels;
     }
@@ -77,5 +76,35 @@ public class AWSUtil {
             if(l.getName().equals("Dog")) return true;
         }
         return false;
+    }
+
+    //detects content filter type labels
+    public static boolean detectModerationLabels(byte[] bytes, Context context){
+        AWSCredentials credentials;
+
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                context.getApplicationContext(),
+                COGNITO_POOL_ID, // Identity pool ID
+                COGNITO_REGION // Region
+        );
+        credentials = credentialsProvider.getCredentials();
+
+        ByteBuffer buffer = ByteBuffer.wrap(bytes);
+
+        AmazonRekognition rekognitionClient = new AmazonRekognitionClient(credentials);
+
+        DetectModerationLabelsRequest request = new DetectModerationLabelsRequest()
+                .withImage(new Image().withBytes(buffer))
+                .withMinConfidence(MIN_CONFIDENCE_EXPLICIT);
+
+        DetectModerationLabelsResult result = rekognitionClient.detectModerationLabels(request);
+        List<ModerationLabel> labels = result.getModerationLabels();
+
+        Logger.i(TAG, Integer.toString(labels.size()));
+        for (ModerationLabel label: labels) {
+            Logger.i(TAG, label.getName() + ": " + label.getConfidence().toString());
+        }
+
+        return labels.size() > 0;
     }
 }
