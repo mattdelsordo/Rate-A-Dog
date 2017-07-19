@@ -12,6 +12,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 import com.mdelsordo.rate_a_dog.services.MusicManagerService;
@@ -21,12 +24,15 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     private static final String TAG = "MainActivity";
 
+    private AdView mFooter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Remove title bar
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+
+        //initialize ads
+        MobileAds.initialize(this, getString(R.string.AD_APP_ID));
 
         //put fragments where they're meant to go
         FragmentManager manager = getSupportFragmentManager();
@@ -36,6 +42,11 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         if(manager.findFragmentById(R.id.fl_main_app) == null){
             manager.beginTransaction().add(R.id.fl_main_app, new UploadFragment()).commit();
         }
+
+        //configure adview
+        mFooter = (AdView)findViewById(R.id.av_main_footer);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mFooter.loadAd(adRequest);
     }
 
     //swaps fragments in the main fragment zone
@@ -85,15 +96,16 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     @Override
     protected void onResume() {
+        if(mFooter!=null) mFooter.resume();
         super.onResume();
     }
 
-
-
     @Override
     protected void onPause() {
-        super.onPause();
         Logger.i(TAG, "app paused");
+        if(mFooter!=null) mFooter.pause();
+        super.onPause();
+
     }
 
     @Override
@@ -101,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
         Logger.i(TAG, "app destroyed");
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().putInt(MusicManagerService.KEY_POSITION, 0).apply();
+
+        if(mFooter!=null)mFooter.destroy();
         super.onDestroy();
     }
 
