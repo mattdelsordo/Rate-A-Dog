@@ -20,6 +20,11 @@ import com.mdelsordo.rate_a_dog.util.Logger;
 
 import java.io.IOException;
 
+import static android.media.AudioManager.AUDIOFOCUS_GAIN;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT;
+import static android.media.AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK;
+
 /**
  * Created by mdelsord on 5/28/17.
  * Handle music in a service so that it persists throughout the app
@@ -30,7 +35,8 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
 
     //list of tracks
     private static final String DIR_MUSIC = "music/";
-    public static final String MAIN_JINGLE = "main_track_zacwilkins_loopermandotcom.wav";
+    public static final String MAIN_JINGLE = "QuirkyDog.mp3";
+    private static final String KEY_POSITION = "key_position";
 
     private AssetManager mAssets;
     private final IBinder mBinder = new MusicBinder();
@@ -40,6 +46,8 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
 
     private EffectPlayer mEffectPlayer;
     private boolean mPlaySound;
+
+    private static final float VOLUME = 0.5f;
 
     public class MusicBinder extends Binder {
         public MusicManagerService getService(){
@@ -66,6 +74,8 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mPlaySound = prefs.getBoolean(HeaderFragment.PREF_PLAY_SOUND, true);
+        position = prefs.getInt(KEY_POSITION, 0);
+        Logger.i(TAG, "Loaded pref: " + position);
 
         mEffectPlayer = new EffectPlayer(this);
 
@@ -76,7 +86,7 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
 
         if(mPlayer != null){
             mPlayer.setLooping(true);
-            mPlayer.setVolume(100,100);
+            mPlayer.setVolume(VOLUME,VOLUME);
         }
 
         mPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -87,10 +97,18 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
             }
         });
 
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                position = 0;
+            }
+        });
+
         mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 //Log.i(TAG, "Music player is prepared.");
+                mPlayer.seekTo(position);
                 mPlayer.start();
             }
         });
@@ -117,6 +135,7 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
             mPlayer.reset();
             mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             afd.close();
+            mPlayer.setVolume(VOLUME, VOLUME);
             mPlayer.setLooping(true);
             mPlayer.prepareAsync();
             mCurrentTrack = musicPath;
@@ -128,13 +147,18 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
     }
 
     public void playMusic(String musicPath){
-        if(mPlaySound &&!mPlayer.isPlaying())play(musicPath);
+        if(mPlaySound &&!mPlayer.isPlaying()) {
+            Logger.i(TAG, "Attempting to play music.");
+            play(musicPath);
+        }else{
+            Logger.i(TAG, "Music can't be played.");
+        }
     }
 
     public void pauseMusic(){
         if(mPlayer.isPlaying()){
-            mPlayer.pause();
             position = mPlayer.getCurrentPosition();
+            mPlayer.pause();
         }
     }
 
@@ -144,10 +168,15 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
         }
     }
 
-    public void resumeMusic(){
-        if(!mPlayer.isPlaying()){
-            mPlayer.seekTo(position);
+    public void resumeMusic(){            mPlayer.seekTo(position);
             mPlayer.start();
+        if(!mPlayer.isPlaying()){
+            if(position == 0){
+                mPlayer.seekTo(position);
+                mPlayer.start();
+            }else{
+                play(MAIN_JINGLE);
+            }
         }
     }
 
@@ -159,10 +188,14 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
 
     @Override
     public void onDestroy() {
-        //Log.i(TAG, "onDestroy called.");
+        Logger.i(TAG, "onDestroy called.");
         super.onDestroy();
         if(mPlayer!=null){
             try{
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                int currentPos = mPlayer.getCurrentPosition();
+                prefs.edit().putInt(KEY_POSITION, currentPos).apply();
+                Logger.i(TAG, "Preferences saved: " + currentPos);
                 mPlayer.stop();
                 mPlayer.release();
             }finally {
@@ -209,4 +242,6 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
     public boolean isPlayingTrack(String track){
         return track.equals(mCurrentTrack);
     }
+
+
 }

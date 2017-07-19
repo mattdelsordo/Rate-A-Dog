@@ -1,14 +1,22 @@
 package com.mdelsordo.rate_a_dog.ui;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.net.Uri;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.services.MusicManagerService;
+import com.mdelsordo.rate_a_dog.util.Logger;
 
-public class MainActivity extends AppCompatActivity implements UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener, ProcessingFragment.ProccessingListener, RatingFragment.RatingFragListener, NoDogFragment.NoDogListener{
+public class MainActivity extends AppCompatActivity implements HeaderFragment.HeaderListener, UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener, ProcessingFragment.ProccessingListener, RatingFragment.RatingFragListener, NoDogFragment.NoDogListener{
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,64 @@ public class MainActivity extends AppCompatActivity implements UploadFragment.Up
     //swaps fragments in the main fragment zone
     private void swapFragment(Fragment frag){
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_app, frag).commit();
+    }
+
+    //Bind activity to music player service
+    private boolean mIsBound = false;
+    private MusicManagerService mMusicPlayer;
+    private ServiceConnection mSCon = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            //Log.i(TAG, "Music service connected.");
+            MusicManagerService.MusicBinder binder = (MusicManagerService.MusicBinder)service;
+            mMusicPlayer = binder.getService();
+            mIsBound = true;
+
+            //do check for music playing
+            mMusicPlayer.playMusic(MusicManagerService.MAIN_JINGLE);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            //Log.i(TAG, "Music service disconnected");
+            mIsBound = false;
+        }
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, MusicManagerService.class);
+        bindService(intent, mSCon, BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Logger.i(TAG, "app stopped");
+        if(mIsBound){
+            unbindService(mSCon);
+            mIsBound = false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Logger.i(TAG, "app paused");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Logger.i(TAG, "app destroyed");
     }
 
     @Override
@@ -70,5 +136,13 @@ public class MainActivity extends AppCompatActivity implements UploadFragment.Up
     @Override
     public void noDogBack() {
         swapFragment(new UploadFragment());
+    }
+
+    @Override
+    public void toggleSound(boolean doPlay) {
+        if(mMusicPlayer!=null){
+            if(doPlay) mMusicPlayer.resumeMusic();
+            else mMusicPlayer.pauseMusic();
+        }
     }
 }

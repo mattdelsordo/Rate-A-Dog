@@ -14,4 +14,7 @@
     <string name="bad">BAD</string>
     <string name="try_again">Try Again</string>
     <string name="error_no_dog_detected_in_image">No dog detected in image :(</string>
+    <string name="created_by_matt_delsordo">Created by Matt DelSordo</string>
+    <string name="close">Close</string>
+    <string name="quirky_dog_license">\"Quirky Dog\" Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 3.0 License http://creativecommons.org/licenses/by/3.0/</string>
 </resources>

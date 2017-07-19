@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/iv_header_sound"
         android:src="@drawable/ic_sound_on"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:layout_alignParentLeft="true"/>
 
     <!-- TODO: make a nice header logo type banner instead of just simple text -->
     <TextView
@@ -18,4 +19,12 @@
         android:text="@string/app_name"
         android:layout_centerInParent="true"
         android:textSize="20sp"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_header_info"
+        android:src="@drawable/ic_info"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>

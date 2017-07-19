@@ -1,16 +1,19 @@
 package com.mdelsordo.rate_a_dog.ui;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.util.InfoDialog;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
 
@@ -28,7 +31,7 @@ public class HeaderFragment extends Fragment {
     }
 
     private SharedPreferences mPrefs;
-    private ImageView mSoundToggle;
+    private ImageView mSoundToggle, mInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +45,14 @@ public class HeaderFragment extends Fragment {
             public void onClick(View v) {
                 toggleSound();
                 Logger.i(TAG, "Sound toggle clicked.");
+            }
+        });
+
+        mInfo = (ImageView)view.findViewById(R.id.iv_header_info);
+        mInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new InfoDialog().show(getActivity().getSupportFragmentManager(), "Info");
             }
         });
 
@@ -59,6 +70,7 @@ public class HeaderFragment extends Fragment {
         boolean sound = mPrefs.getBoolean(PREF_PLAY_SOUND, true);
         mPrefs.edit().putBoolean(PREF_PLAY_SOUND, !sound).apply();
         updateSoundButton(!sound);
+        mListener.toggleSound(!sound);
     }
 
     private void updateSoundButton(boolean play){
@@ -69,4 +81,20 @@ public class HeaderFragment extends Fragment {
         }
     }
 
+    public interface HeaderListener{
+        void toggleSound(boolean doPlay);
+    }
+    private HeaderListener mListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = (HeaderListener)context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
 }

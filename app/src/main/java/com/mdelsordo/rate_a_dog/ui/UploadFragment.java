@@ -47,6 +47,7 @@ public class UploadFragment extends Fragment {
     private Button mGallery, mCamera;
     private Uri mPhotoUri;
     private static final String ARG_PHOTO = "arg_photo";
+    public static boolean sContinueMusic;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,6 +82,7 @@ public class UploadFragment extends Fragment {
     private void getPhotoFromGallery(){
         //prompt for filesystem permissions
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            sContinueMusic = true;
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -105,6 +107,7 @@ public class UploadFragment extends Fragment {
                     Logger.e(TAG, e.toString());
                 }
                 if(photoFile !=null){
+                    sContinueMusic = true;
                     mPhotoUri = FileProvider.getUriForFile(getContext(), "com.mdelsordo.fileprovider", photoFile);
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoUri);
                     startActivityForResult(intent, FROM_CAMERA);
@@ -134,6 +137,7 @@ public class UploadFragment extends Fragment {
     //get image back from call to image getting apparatus
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        sContinueMusic = false;
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == FROM_GALLERY && resultCode == Activity.RESULT_OK){
             if(data == null){
