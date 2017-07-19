@@ -36,7 +36,7 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
     //list of tracks
     private static final String DIR_MUSIC = "music/";
     public static final String MAIN_JINGLE = "QuirkyDog.mp3";
-    private static final String KEY_POSITION = "key_position";
+    public static final String KEY_POSITION = "key_position";
 
     private AssetManager mAssets;
     private final IBinder mBinder = new MusicBinder();
@@ -168,8 +168,7 @@ public class MusicManagerService extends Service implements MediaPlayer.OnErrorL
         }
     }
 
-    public void resumeMusic(){            mPlayer.seekTo(position);
-            mPlayer.start();
+    public void resumeMusic(){
         if(!mPlayer.isPlaying()){
             if(position == 0){
                 mPlayer.seekTo(position);

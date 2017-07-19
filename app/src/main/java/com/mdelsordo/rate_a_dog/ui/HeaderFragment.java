@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 import com.mdelsordo.rate_a_dog.util.InfoDialog;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
@@ -44,6 +45,7 @@ public class HeaderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 toggleSound();
+                mListener.playEffect(EffectPlayer.CLICK);
                 Logger.i(TAG, "Sound toggle clicked.");
             }
         });
@@ -52,6 +54,7 @@ public class HeaderFragment extends Fragment {
         mInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.CLICK);
                 new InfoDialog().show(getActivity().getSupportFragmentManager(), "Info");
             }
         });
@@ -83,6 +86,7 @@ public class HeaderFragment extends Fragment {
 
     public interface HeaderListener{
         void toggleSound(boolean doPlay);
+        void playEffect(String path);
     }
     private HeaderListener mListener;
 

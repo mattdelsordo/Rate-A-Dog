@@ -3,14 +3,17 @@ package com.mdelsordo.rate_a_dog.ui;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 import com.mdelsordo.rate_a_dog.services.MusicManagerService;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     //swaps fragments in the main fragment zone
     private void swapFragment(Fragment frag){
+        if(mMusicPlayer!=null)mMusicPlayer.playEffect(EffectPlayer.BORF);
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_app, frag).commit();
     }
 
@@ -94,8 +98,10 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         Logger.i(TAG, "app destroyed");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putInt(MusicManagerService.KEY_POSITION, 0).apply();
+        super.onDestroy();
     }
 
     @Override
@@ -144,5 +150,10 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
             if(doPlay) mMusicPlayer.resumeMusic();
             else mMusicPlayer.pauseMusic();
         }
+    }
+
+    @Override
+    public void playEffect(String path) {
+        if(mMusicPlayer!=null)mMusicPlayer.playEffect(path);
     }
 }

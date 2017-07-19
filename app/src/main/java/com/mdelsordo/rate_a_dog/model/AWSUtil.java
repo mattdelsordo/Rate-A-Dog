@@ -63,10 +63,10 @@ public class AWSUtil {
         DetectLabelsResult result = rekognitionClient.detectLabels(request);
         List<Label> labels = result.getLabels();
 
-        System.out.println("Detected labels for image.");
-        for (Label label: labels) {
-            Logger.i(TAG, label.getName() + ": " + label.getConfidence().toString());
-        }
+//        System.out.println("Detected labels for image.");
+//        for (Label label: labels) {
+//            Logger.i(TAG, label.getName() + ": " + label.getConfidence().toString());
+//        }
 
         return labels;
     }
