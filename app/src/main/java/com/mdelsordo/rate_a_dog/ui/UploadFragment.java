@@ -150,7 +150,7 @@ public class UploadFragment extends Fragment {
             if(mPhotoUri == null){
                 Logger.e(TAG, "Photo uri is null.");
             }
-            //addPicToGallery(mPhotoUri);
+            addPicToGallery(mPhotoUri);
             mListener.confirmImage(mPhotoUri);
         }
     }
