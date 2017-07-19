@@ -60,6 +60,14 @@ public class ProcessingFragment extends Fragment {
         return view;
     }
 
+    //handles behavior after getting response from rekognize
+    private void handleRating(boolean isDog){
+        if(isDog){
+            mListener.gotoRatingFrag(mPhotoPath, true);
+        }
+        else mListener.gotoNoDogFrag();
+    }
+
     private class RateDogAsync extends AsyncTask<String, Void, Boolean>{
 
         @Override
@@ -88,8 +96,9 @@ public class ProcessingFragment extends Fragment {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             mIsProcessing = false;
-            Toast.makeText(getContext(), "Result: " + aBoolean, Toast.LENGTH_LONG).show();
-            mListener.processingBack();
+            //Toast.makeText(getContext(), "Result: " + aBoolean, Toast.LENGTH_LONG).show();
+            //mListener.processingBack();
+            handleRating(aBoolean);
         }
     }
 
@@ -101,6 +110,8 @@ public class ProcessingFragment extends Fragment {
 
     public interface ProccessingListener{
         void processingBack();
+        void gotoRatingFrag(String photoPath, boolean isGood);
+        void gotoNoDogFrag();
     }
     private ProccessingListener mListener;
 

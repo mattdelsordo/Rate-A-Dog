@@ -8,4 +8,10 @@
     <string name="rate_this_dog">Rate this dog</string>
     <string name="choose_another_dog">Back</string>
     <string name="now_rating_dog">Rating your dog...</string>
+    <string name="rating">Rating:</string>
+    <string name="good">GOOD</string>
+    <string name="rate_another">Rate Another</string>
+    <string name="bad">BAD</string>
+    <string name="try_again">Try Again</string>
+    <string name="error_no_dog_detected_in_image">No dog detected in image :(</string>
 </resources>

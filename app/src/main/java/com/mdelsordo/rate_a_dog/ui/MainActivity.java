@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.mdelsordo.rate_a_dog.R;
 
-public class MainActivity extends AppCompatActivity implements UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener, ProcessingFragment.ProccessingListener{
+public class MainActivity extends AppCompatActivity implements UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener, ProcessingFragment.ProccessingListener, RatingFragment.RatingFragListener, NoDogFragment.NoDogListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,26 @@ public class MainActivity extends AppCompatActivity implements UploadFragment.Up
 
     @Override
     public void processingBack() {
+        swapFragment(new UploadFragment());
+    }
+
+    @Override
+    public void gotoRatingFrag(String photoPath, boolean isGood) {
+        swapFragment(RatingFragment.newInstance(photoPath, isGood));
+    }
+
+    @Override
+    public void gotoNoDogFrag() {
+        swapFragment(new NoDogFragment());
+    }
+
+    @Override
+    public void ratingBack() {
+        swapFragment(new UploadFragment());
+    }
+
+    @Override
+    public void noDogBack() {
         swapFragment(new UploadFragment());
     }
 }
