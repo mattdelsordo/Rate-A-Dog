@@ -17,7 +17,6 @@ import com.amazonaws.services.rekognition.model.DetectLabelsRequest;
 import com.amazonaws.services.rekognition.model.DetectLabelsResult;
 import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.Label;
-import com.mdelsordo.rate_a_dog.util.Auth;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
 import java.nio.ByteBuffer;
@@ -35,11 +34,6 @@ public class AWSUtil {
 
     private static final float MIN_CONFIDENCE = 80F;
     private static final int MAX_LABELS = 10;
-
-    private String AWS_ACCESS_KEY_ID = Auth.AWS_ACCESS_KEY_ID;
-    private String AWS_SECRET_ACCESS_KEY = Auth.AWS_SECRET_ACCESS_KEY;
-    private String AWS_ACCESS_KEY = Auth.AWS_ACCESS_KEY_ID;
-    private String AWS_SECRET_KEY = Auth.AWS_SECRET_ACCESS_KEY;
 
     //accepts image and retuns a ByteBuffer
 //    public static ByteBuffer imageToBytes(){
