@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.mdelsordo.rate_a_dog.ui.RatingFragment">
+    tools:context="com.mdelsordo.rate_a_dog.ui.RatingFragment"
+    android:id="@+id/rl_rating">
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -80,5 +81,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
+
         />
 </RelativeLayout>

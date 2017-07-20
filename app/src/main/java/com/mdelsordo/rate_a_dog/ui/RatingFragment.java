@@ -10,7 +10,9 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -19,11 +21,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.util.Logger;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.TransitionManager;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -110,6 +115,17 @@ public class RatingFragment extends Fragment {
                 shareOnSocialMedia(viewToBitmap(mRatingCard));
             }
         });
+
+        //set up timer to display re-rate button
+//        final RelativeLayout rl = (RelativeLayout)view.findViewById(R.id.rl_rating);
+//        Runnable timer = new Runnable() {
+//            @Override
+//            public void run() {
+//                TransitionManager.beginDelayedTransition(rl);
+//                mRating.setVisibility(View.VISIBLE);
+//            }
+//        };
+//        new Handler().postDelayed(timer, 400);
 
         return view;
     }

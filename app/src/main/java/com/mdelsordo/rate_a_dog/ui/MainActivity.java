@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 import com.mdelsordo.rate_a_dog.services.MusicManagerService;
 import com.mdelsordo.rate_a_dog.util.Logger;
+import com.transitionseverywhere.Fade;
+import com.transitionseverywhere.Transition;
 
 public class MainActivity extends AppCompatActivity implements HeaderFragment.HeaderListener, UploadFragment.UploadFragListener, ConfirmFragment.ConfirmFragListener, ProcessingFragment.ProccessingListener, RatingFragment.RatingFragListener, NoDogFragment.NoDogListener{
 
@@ -51,9 +54,18 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
     }
 
     //swaps fragments in the main fragment zone
-    private void swapFragment(Fragment frag){
+    private void swapFragment(Fragment frag, boolean fade){
         if(mMusicPlayer!=null)mMusicPlayer.playEffect(EffectPlayer.BORF);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_app, frag).commit();
+
+        if(fade){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.setTransition(R.transition.fade_transition);
+            //ft.setCustomAnimations(Fade.OUT, Fade.IN);
+            ft.replace(R.id.fl_main_app, frag).commit();
+        }else{
+            getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_app, frag).commit();
+        }
+
     }
 
     //Bind activity to music player service
@@ -121,37 +133,37 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     @Override
     public void confirmFragBack() {
-        swapFragment(new UploadFragment());
+        swapFragment(new UploadFragment(), true);
     }
 
     @Override
     public void confirmFragConfirm(Uri path) {
-        swapFragment(ProcessingFragment.newInstance(path));
+        swapFragment(ProcessingFragment.newInstance(path), false);
     }
 
     @Override
     public void confirmImage(Uri uri) {
-        swapFragment(ConfirmFragment.newInstance(uri));
+        swapFragment(ConfirmFragment.newInstance(uri), false);
     }
 
     @Override
     public void processingBack() {
-        swapFragment(new UploadFragment());
+        swapFragment(new UploadFragment(), true);
     }
 
     @Override
     public void gotoRatingFrag(String photoPath, boolean isGood) {
-        swapFragment(RatingFragment.newInstance(photoPath, isGood));
+        swapFragment(RatingFragment.newInstance(photoPath, isGood), false);
     }
 
     @Override
     public void gotoNoDogFrag() {
-        swapFragment(new NoDogFragment());
+        swapFragment(new NoDogFragment(), false);
     }
 
     @Override
     public void ratingBack() {
-        swapFragment(new UploadFragment());
+        swapFragment(new UploadFragment(), true);
         mFooter.setVisibility(View.VISIBLE);
     }
 
@@ -162,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     @Override
     public void noDogBack() {
-        swapFragment(new UploadFragment());
+        swapFragment(new UploadFragment(), true);
     }
 
     @Override
