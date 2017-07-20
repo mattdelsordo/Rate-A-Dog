@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.amazonaws.services.rekognition.AmazonRekognition;
 import com.amazonaws.services.rekognition.model.Label;
 import com.amazonaws.util.IOUtils;
 import com.mdelsordo.rate_a_dog.R;
@@ -84,12 +85,13 @@ public class ProcessingFragment extends Fragment {
                 InputStream stream = getContext().getContentResolver().openInputStream(photoPath);
                 //Bitmap image = BitmapFactory.decodeStream(stream);
                 byte[] bytes = IOUtils.toByteArray(stream);
-                Collection<Label> labels = AWSUtil.detectLabelsTest(bytes, getContext());
+                AmazonRekognition client = AWSUtil.getRekognitionClient(getContext());
+                Collection<Label> labels = AWSUtil.detectLabelsTest(bytes, client);
                 boolean hasDog = AWSUtil.containsDog(labels);
 
                 boolean isGood = false;
                 if(hasDog){
-                    isGood = !AWSUtil.detectModerationLabels(bytes, getContext());
+                    isGood = !AWSUtil.detectModerationLabels(bytes, client);
                 }
 //                isGood = !AWSUtil.detectModerationLabels(bytes, getContext());
 

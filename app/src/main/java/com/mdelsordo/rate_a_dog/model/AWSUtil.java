@@ -39,8 +39,7 @@ public class AWSUtil {
     private static final String COGNITO_POOL_ID = "us-east-1:838d53dc-d050-4e10-8856-0f1c6642c431";
     private static final Regions COGNITO_REGION = Regions.US_EAST_1;
 
-    //accepts bytes and returns a collection of labels for the converted image
-    public static Collection<Label> detectLabelsTest(byte[] bytes, Context context){
+    public static AmazonRekognition getRekognitionClient(Context context){
         AWSCredentials credentials;
 
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
@@ -49,17 +48,30 @@ public class AWSUtil {
                 COGNITO_REGION // Region
         );
         credentials = credentialsProvider.getCredentials();
+        return new AmazonRekognitionClient(credentials);
+    }
+
+    //accepts bytes and returns a collection of labels for the converted image
+    public static Collection<Label> detectLabelsTest(byte[] bytes, AmazonRekognition client){
+//        AWSCredentials credentials;
+//
+//        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+//                context.getApplicationContext(),
+//                COGNITO_POOL_ID, // Identity pool ID
+//                COGNITO_REGION // Region
+//        );
+//        credentials = credentialsProvider.getCredentials();
 
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
 
-        AmazonRekognition rekognitionClient = new AmazonRekognitionClient(credentials);
+//        AmazonRekognition rekognitionClient = new AmazonRekognitionClient(credentials);
 
         DetectLabelsRequest request = new DetectLabelsRequest()
                 .withImage(new Image().withBytes(buffer))
                 .withMaxLabels(MAX_LABELS)
                 .withMinConfidence(MIN_CONFIDENCE);
 
-        DetectLabelsResult result = rekognitionClient.detectLabels(request);
+        DetectLabelsResult result = client.detectLabels(request);
         List<Label> labels = result.getLabels();
 
         Logger.i(TAG, "Detected labels for image.");
@@ -79,25 +91,25 @@ public class AWSUtil {
     }
 
     //detects content filter type labels
-    public static boolean detectModerationLabels(byte[] bytes, Context context){
-        AWSCredentials credentials;
-
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                context.getApplicationContext(),
-                COGNITO_POOL_ID, // Identity pool ID
-                COGNITO_REGION // Region
-        );
-        credentials = credentialsProvider.getCredentials();
+    public static boolean detectModerationLabels(byte[] bytes, AmazonRekognition client){
+//        AWSCredentials credentials;
+//
+//        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+//                context.getApplicationContext(),
+//                COGNITO_POOL_ID, // Identity pool ID
+//                COGNITO_REGION // Region
+//        );
+//        credentials = credentialsProvider.getCredentials();
 
         ByteBuffer buffer = ByteBuffer.wrap(bytes);
 
-        AmazonRekognition rekognitionClient = new AmazonRekognitionClient(credentials);
+//        AmazonRekognition rekognitionClient = new AmazonRekognitionClient(credentials);
 
         DetectModerationLabelsRequest request = new DetectModerationLabelsRequest()
                 .withImage(new Image().withBytes(buffer))
                 .withMinConfidence(MIN_CONFIDENCE_EXPLICIT);
 
-        DetectModerationLabelsResult result = rekognitionClient.detectModerationLabels(request);
+        DetectModerationLabelsResult result = client.detectModerationLabels(request);
         List<ModerationLabel> labels = result.getModerationLabels();
 
         Logger.i(TAG, Integer.toString(labels.size()));

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.util.Logger;
+import com.transitionseverywhere.TransitionManager;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -45,6 +47,7 @@ public class RatingFragment extends Fragment {
     private Button mBack;
     private ImageView mPhoto;
     private TextView mRating;
+    private ViewGroup mRatingGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +58,8 @@ public class RatingFragment extends Fragment {
         Bundle args = getArguments();
         boolean isGood = args.getBoolean(ARG_GOOD);
         String path = args.getString(ARG_PHOTO);
+
+        mRatingGroup = (ViewGroup)view.findViewById(R.id.vg_rating_text);
 
         //set photo image
         mPhoto = (ImageView)view.findViewById(R.id.iv_rating_photo);
@@ -85,6 +90,12 @@ public class RatingFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        TransitionManager.beginDelayedTransition(mRatingGroup);
+        mRating.setVisibility(View.VISIBLE);
+    }
 
     public interface RatingFragListener{
         void ratingBack();
