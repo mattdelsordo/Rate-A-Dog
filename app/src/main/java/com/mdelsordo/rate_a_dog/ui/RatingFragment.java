@@ -85,7 +85,10 @@ public class RatingFragment extends Fragment {
         //set rating text
         mRating = (TextView)view.findViewById(R.id.tv_rating_rating);
         if(isGood) mRating.setText(getString(R.string.good));
-        else mRating.setText(R.string.bad);
+        else{
+            mListener.removeAd(); //remove ad if the image is explicit so I dont get in trouble
+            mRating.setText(R.string.bad);
+        }
 
         //handle back button
         mBack = (Button)view.findViewById(R.id.b_rating_back);
@@ -142,6 +145,7 @@ public class RatingFragment extends Fragment {
 
     public interface RatingFragListener{
         void ratingBack();
+        void removeAd();
     }
     private RatingFragListener mListener;
 
