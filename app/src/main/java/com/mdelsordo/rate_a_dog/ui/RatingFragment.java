@@ -155,8 +155,8 @@ public class RatingFragment extends Fragment {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("image/*");
         share.putExtra(Intent.EXTRA_STREAM, uri);
-        share.putExtra(Intent.EXTRA_TEXT, "test text");
-        getContext().startActivity(Intent.createChooser(share, "Share your rating!"));
+        share.putExtra(Intent.EXTRA_TEXT, getString(R.string.social_media_post_text));
+        getContext().startActivity(Intent.createChooser(share, getString(R.string.share_rating_prompt)));
     }
 
     public interface RatingFragListener{
