@@ -1,3 +1,7 @@
+---
+title: "Privacy Policy"
+---
+
 ## Privacy Policy
 
 Matt DelSordo built the Rate-A-Dog app as an Ad Supported app. This SERVICE is provided by Matt DelSordo at no cost and is intended for use as is.
