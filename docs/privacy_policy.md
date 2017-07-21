@@ -1,4 +1,4 @@
-##Privacy Policy
+## Privacy Policy
 
 Matt DelSordo built the Rate-A-Dog app as an Ad Supported app. This SERVICE is provided by Matt DelSordo at no cost and is intended for use as is.
 
@@ -31,7 +31,6 @@ This Service does not use these “cookies” explicitly. However, the app may u
 **Service Providers**
 
 I may employ third-party companies and individuals due to the following reasons:
-
 * To facilitate our Service;
 * To provide the Service on our behalf;
 * To perform Service-related services; or
