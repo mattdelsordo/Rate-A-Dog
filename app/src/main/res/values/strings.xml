@@ -22,4 +22,5 @@
     <string name="AD_APP_ID">ca-app-pub-9879355661310002~2715754570</string>
     <string name="social_media_post_text">This dog has been rated by Rate-a-Dog: coming soon to the Google Play Store!</string>
     <string name="share_rating_prompt">Share your rating!</string>
+    <string name="privacy_policy">Privacy Policy</string>
 </resources>
