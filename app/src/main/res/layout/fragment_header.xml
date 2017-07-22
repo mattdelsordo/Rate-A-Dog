@@ -1,23 +1,23 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.mdelsordo.rate_a_dog.ui.HeaderFragment">
+    tools:context="com.mdelsordo.rate_a_dog.ui.HeaderFragment"
+    android:gravity="center"
+    android:layout_marginTop="4dp">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/iv_header_sound"
         android:src="@drawable/ic_sound_on"
-        android:layout_margin="10dp"
-        android:layout_alignParentLeft="true"/>
+        android:layout_margin="10dp" />
 
-    <!-- TODO: make a nice header logo type banner instead of just simple text -->
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:src="@drawable/rate_a_dog_banner"
+        android:adjustViewBounds="true"
         android:textSize="20sp"/>
 
     <ImageView
@@ -25,6 +25,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/iv_header_info"
         android:src="@drawable/ic_info"
-        android:layout_margin="10dp"
-        android:layout_alignParentRight="true"/>
-</RelativeLayout>
+        android:layout_margin="10dp" />
+</LinearLayout>
