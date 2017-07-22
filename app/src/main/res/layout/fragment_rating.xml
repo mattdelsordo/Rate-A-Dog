@@ -1,16 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.mdelsordo.rate_a_dog.ui.RatingFragment"
-    android:id="@+id/rl_rating">
+    android:id="@+id/rl_rating"
+    android:gravity="center">
 
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.CardView
             android:layout_width="wrap_content"
@@ -78,9 +78,6 @@
         android:layout_weight="0"
         android:text="@string/rate_another"
         android:id="@+id/b_rating_back"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
-
-        />
-</RelativeLayout>
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"/>
+</LinearLayout>
