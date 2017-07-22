@@ -17,6 +17,7 @@ import com.amazonaws.services.rekognition.model.Image;
 import com.amazonaws.services.rekognition.model.Label;
 import com.amazonaws.services.rekognition.model.ModerationLabel;
 import com.amazonaws.services.s3.model.Region;
+import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
 import java.nio.ByteBuffer;
@@ -36,7 +37,6 @@ public class AWSUtil {
     private static final float MIN_CONFIDENCE_EXPLICIT = 50F;
     private static final int MAX_LABELS = 20;
 
-    private static final String COGNITO_POOL_ID = "us-east-1:838d53dc-d050-4e10-8856-0f1c6642c431";
     private static final Regions COGNITO_REGION = Regions.US_EAST_1;
 
     public static AmazonRekognition getRekognitionClient(Context context){
@@ -44,7 +44,7 @@ public class AWSUtil {
 
         CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
                 context.getApplicationContext(),
-                COGNITO_POOL_ID, // Identity pool ID
+                context.getString(R.string.COGNITO_POOL_ID), // Identity pool ID
                 COGNITO_REGION // Region
         );
         credentials = credentialsProvider.getCredentials();

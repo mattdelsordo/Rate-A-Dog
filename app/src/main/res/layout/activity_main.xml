@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/main_banner_unit_id"
+        ads:adUnitId="@string/AD_FOOTER_BANNER"
         android:layout_weight="0"
         android:id="@+id/av_main_footer"
         android:layout_gravity="center"/>
