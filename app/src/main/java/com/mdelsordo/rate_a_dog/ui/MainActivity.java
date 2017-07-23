@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements HeaderFragment.He
 
     //swaps fragments in the main fragment zone
     private void swapFragment(Fragment frag, boolean fade){
-        if(mMusicPlayer!=null)mMusicPlayer.playEffect(EffectPlayer.BORF);
+        //if(mMusicPlayer!=null)mMusicPlayer.playEffect(EffectPlayer.BORF);
 
         if(fade){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

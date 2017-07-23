@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 import com.mdelsordo.rate_a_dog.util.Logger;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
@@ -100,6 +101,7 @@ public class RatingFragment extends Fragment {
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.BORF);
                 mListener.ratingBack();
             }
         });
@@ -109,6 +111,7 @@ public class RatingFragment extends Fragment {
         mShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.BORF);
 //                ImageView image = new ImageView(getContext());
 //                image.setImageBitmap(viewToBitmap(mRatingCard));
 //                new AlertDialog.Builder(getContext()).setView(image).setTitle("Test").show();
@@ -162,6 +165,7 @@ public class RatingFragment extends Fragment {
     public interface RatingFragListener{
         void ratingBack();
         void removeAd();
+        void playEffect(String path);
     }
     private RatingFragListener mListener;
 

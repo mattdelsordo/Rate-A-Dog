@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +32,7 @@ public class NoDogFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.BORF);
                 mListener.noDogBack();
             }
         });
@@ -40,6 +42,7 @@ public class NoDogFragment extends Fragment {
 
     public interface NoDogListener{
         void noDogBack();
+        void playEffect(String path);
     }
     private NoDogListener mListener;
 

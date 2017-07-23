@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
 import java.io.FileNotFoundException;
@@ -69,6 +70,7 @@ public class ConfirmFragment extends Fragment {
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.BORF);
                 mListener.confirmFragConfirm(mPath);
             }
         });
@@ -77,6 +79,7 @@ public class ConfirmFragment extends Fragment {
         mReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.BORF);
                 mListener.confirmFragBack();
             }
         });
@@ -87,6 +90,7 @@ public class ConfirmFragment extends Fragment {
     public interface ConfirmFragListener{
         void confirmFragBack();
         void confirmFragConfirm(Uri path);
+        void playEffect(String path);
     }
     private ConfirmFragListener mListener;
 

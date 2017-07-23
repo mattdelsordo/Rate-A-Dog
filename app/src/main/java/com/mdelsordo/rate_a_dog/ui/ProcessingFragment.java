@@ -19,6 +19,7 @@ import com.amazonaws.services.rekognition.model.Label;
 import com.amazonaws.util.IOUtils;
 import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.model.AWSUtil;
+import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,6 +64,7 @@ public class ProcessingFragment extends Fragment {
 
     //handles behavior after getting response from rekognize
     private void handleRating(BoolPair pair){
+        mListener.playEffect(EffectPlayer.BORF);
         if(pair.hasDog){
             mListener.gotoRatingFrag(mPhotoPath, pair.isGood);
         }
@@ -122,6 +124,7 @@ public class ProcessingFragment extends Fragment {
         void processingBack();
         void gotoRatingFrag(String photoPath, boolean isGood);
         void gotoNoDogFrag();
+        void playEffect(String path);
     }
     private ProccessingListener mListener;
 

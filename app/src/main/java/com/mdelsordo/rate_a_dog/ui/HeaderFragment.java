@@ -45,7 +45,7 @@ public class HeaderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 toggleSound();
-                mListener.playEffect(EffectPlayer.CLICK);
+                mListener.playEffect(EffectPlayer.BORF);
                 Logger.i(TAG, "Sound toggle clicked.");
             }
         });
@@ -54,7 +54,7 @@ public class HeaderFragment extends Fragment {
         mInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.playEffect(EffectPlayer.CLICK);
+                mListener.playEffect(EffectPlayer.BORF);
                 new InfoDialog().show(getActivity().getSupportFragmentManager(), "Info");
             }
         });

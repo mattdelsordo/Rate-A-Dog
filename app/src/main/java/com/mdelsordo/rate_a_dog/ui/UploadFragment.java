@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mdelsordo.rate_a_dog.R;
+import com.mdelsordo.rate_a_dog.model.EffectPlayer;
 import com.mdelsordo.rate_a_dog.util.Logger;
 
 import java.io.File;
@@ -64,6 +65,7 @@ public class UploadFragment extends Fragment {
         mGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.BORF);
                 getPhotoFromGallery();
             }
         });
@@ -72,6 +74,7 @@ public class UploadFragment extends Fragment {
         mCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mListener.playEffect(EffectPlayer.BORF);
                 getPhotoFromCamera();
             }
         });
@@ -188,6 +191,7 @@ public class UploadFragment extends Fragment {
 
     public interface UploadFragListener{
         void confirmImage(Uri uri);
+        void playEffect(String path);
     }
     private UploadFragListener mListener;
 
