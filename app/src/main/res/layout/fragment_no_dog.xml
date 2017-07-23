@@ -39,8 +39,8 @@
         android:id="@+id/b_nodog_back"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"/>
 
 </LinearLayout>
 
