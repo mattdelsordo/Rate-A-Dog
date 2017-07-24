@@ -58,7 +58,7 @@ public class RatingFragment extends Fragment {
 
     private Button mBack;
     private ImageView mPhoto;
-    private TextView mRating;
+    private ImageView mRating;
     private FloatingActionButton mShare;
     private View mRatingCard;
 
@@ -89,11 +89,11 @@ public class RatingFragment extends Fragment {
         }
 
         //set rating text
-        mRating = (TextView)view.findViewById(R.id.tv_rating_rating);
-        if(isGood) mRating.setText(getString(R.string.good));
+        mRating = (ImageView)view.findViewById(R.id.iv_rating_rating);
+        if(isGood) mRating.setImageResource(R.drawable.gooddog);
         else{
             mListener.removeAd(); //remove ad if the image is explicit so I dont get in trouble
-            mRating.setText(R.string.bad);
+            mRating.setImageResource(R.drawable.baddog);
         }
 
         //handle back button

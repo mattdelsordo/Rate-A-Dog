@@ -9,20 +9,22 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:id="@+id/iv_header_sound"
         android:src="@drawable/ic_sound_on"
         android:layout_margin="10dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:src="@drawable/rate_a_dog_banner"
-        android:adjustViewBounds="true"
-        android:textSize="20sp"/>
+        android:adjustViewBounds="true"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0"
         android:id="@+id/iv_header_info"
         android:src="@drawable/ic_info"
         android:layout_margin="10dp" />

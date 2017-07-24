@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,76 +8,87 @@
     android:id="@+id/rl_rating"
     android:gravity="center">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:id="@+id/cv_rating_maincard">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/cv_rating_maincard"
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_margin="10dp"
-                    android:layout_weight="1"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
                     android:gravity="center">
 
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_margin="10dp"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/iv_rating_photo"
+                            android:src="@drawable/landscape_dog"
+                            android:adjustViewBounds="true"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center"/>
+                    </android.support.v7.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:text="@string/rating"
+                        android:textSize="20sp"/>
+
                     <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/iv_rating_photo"
-                        android:src="@drawable/landscape_dog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_weight="0"
+                        android:src="@drawable/gooddog"
+                        android:id="@+id/iv_rating_rating"
+                        android:layout_marginBottom="10dp"
                         android:adjustViewBounds="true"
                         android:scaleType="fitXY"
-                        android:layout_gravity="center"/>
-                </android.support.v7.widget.CardView>
+                        android:visibility="visible"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:layout_gravity="end|bottom"
+                app:fabSize="normal"
+                android:src="@drawable/ic_share"
+                android:id="@+id/fab_rating_share"/>
+        </FrameLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="@string/rating"
-                    android:textSize="20sp"/>
-
-                <!--TODO: this needs to be a huge garish graphic-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:text="@string/good"
-                    android:textSize="30sp"
-                    android:id="@+id/tv_rating_rating"
-                    android:layout_marginBottom="10dp"
-                    android:visibility="visible"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.design.widget.FloatingActionButton
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:layout_gravity="end|bottom"
-            app:fabSize="normal"
-            android:src="@drawable/ic_share"
-            android:id="@+id/fab_rating_share"/>
-    </FrameLayout>
+            android:layout_weight="0"
+            android:text="@string/rate_another"
+            android:id="@+id/b_rating_back"
+            android:layout_margin="6dp"/>
 
 
+    </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:text="@string/rate_another"
-        android:id="@+id/b_rating_back"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="10dp"/>
-</LinearLayout>
+
+</RelativeLayout>
