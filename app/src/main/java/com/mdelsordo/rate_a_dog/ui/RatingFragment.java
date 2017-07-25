@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.model.EffectPlayer;
+import com.mdelsordo.rate_a_dog.util.BitmapHelper;
 import com.mdelsordo.rate_a_dog.util.Logger;
 import com.transitionseverywhere.Fade;
 import com.transitionseverywhere.TransitionManager;
@@ -77,16 +78,23 @@ public class RatingFragment extends Fragment {
 
         //set photo image
         mPhoto = (ImageView)view.findViewById(R.id.iv_rating_photo);
-        try{
-            InputStream stream = getContext().getContentResolver().openInputStream(Uri.parse(path));
-            Bitmap dog = BitmapFactory.decodeStream(stream);
-            mPhoto.setImageBitmap(dog);
-        }catch (FileNotFoundException e){
-            Logger.e(TAG, e.toString());
-            mPhoto.setImageResource(R.drawable.default_dog);
-            Toast.makeText(getContext(), "ERROR: File not found.", Toast.LENGTH_LONG).show();
+        View layout = getActivity().findViewById(R.id.fl_main_app);
+        Bitmap photo = BitmapHelper.decodeStream(getContext(), Uri.parse(path), Math.min(layout.getWidth(), layout.getHeight()));
+        if(photo == null){
+            Logger.e(TAG, "Photo is null");
             mListener.ratingBack();
         }
+        else mPhoto.setImageBitmap(photo);
+//        try{
+//            InputStream stream = getContext().getContentResolver().openInputStream(Uri.parse(path));
+//            Bitmap dog = BitmapFactory.decodeStream(stream);
+//            mPhoto.setImageBitmap(dog);
+//        }catch (FileNotFoundException e){
+//            Logger.e(TAG, e.toString());
+//            mPhoto.setImageResource(R.drawable.default_dog);
+//            Toast.makeText(getContext(), "ERROR: File not found.", Toast.LENGTH_LONG).show();
+//            mListener.ratingBack();
+//        }
 
         //set rating text
         mRating = (ImageView)view.findViewById(R.id.iv_rating_rating);

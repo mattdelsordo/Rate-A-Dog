@@ -3,7 +3,6 @@ package com.mdelsordo.rate_a_dog.ui;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,14 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.mdelsordo.rate_a_dog.R;
 import com.mdelsordo.rate_a_dog.model.EffectPlayer;
+import com.mdelsordo.rate_a_dog.util.BitmapHelper;
 import com.mdelsordo.rate_a_dog.util.Logger;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,21 +46,29 @@ public class ConfirmFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Logger.i(TAG, "ConfirmFragment created");
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_confirm, container, false);
 
         mPhoto = (ImageView)view.findViewById(R.id.iv_confirm_photo);
         //set up photo
         mPath = Uri.parse(getArguments().getString(ARG_PHOTO));
-        try{
-            InputStream stream = getContext().getContentResolver().openInputStream(mPath);
-            mPhoto.setImageBitmap(BitmapFactory.decodeStream(stream));
-        }catch (FileNotFoundException e){
-            Logger.e(TAG, e.toString());
-            mPhoto.setImageBitmap(null);
-            Toast.makeText(getContext(), "ERROR: File not found.", Toast.LENGTH_LONG).show();
+        View layout = getActivity().findViewById(R.id.fl_main_app);
+        Bitmap photo = BitmapHelper.decodeStream(getContext(), mPath, Math.min(layout.getWidth(), layout.getHeight()));
+        if(photo == null){
+            Logger.e(TAG, "Photo is null");
             mListener.confirmFragBack();
         }
+        else mPhoto.setImageBitmap(photo);
+//        try{
+//            InputStream stream = getContext().getContentResolver().openInputStream(mPath);
+//            mPhoto.setImageBitmap(BitmapFactory.decodeStream(stream));
+//        }catch (FileNotFoundException e){
+//            Logger.e(TAG, e.toString());
+//            mPhoto.setImageBitmap(null);
+//            Toast.makeText(getContext(), "ERROR: File not found.", Toast.LENGTH_LONG).show();
+//            mListener.confirmFragBack();
+//        }
 
         mConfirm = (Button) view.findViewById(R.id.b_confirm_confirm);
         mConfirm.setOnClickListener(new View.OnClickListener() {
