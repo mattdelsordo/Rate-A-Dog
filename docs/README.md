@@ -1,4 +1,4 @@
-[![Rate A Dog!](../app/src/main/res/drawable-xhdpi/rate_a_dog_banner.png)](https://play.google.com/store/apps/details?id=com.mdelsordo.rate_a_dog)
+[![Rate A Dog!](https://github.com/mattdelsordo/Rate-A-Dog/blob/master/app/src/main/res/drawable-xhdpi/rate_a_dog_banner.png?raw=true)](https://play.google.com/store/apps/details?id=com.mdelsordo.rate_a_dog)
 
 ## [Get it on the Google Play Store!](https://play.google.com/store/apps/details?id=com.mdelsordo.rate_a_dog)
 
