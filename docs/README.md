@@ -1,1 +1,5 @@
-Coming soon the the Google Play Store: the new way to determine the rating of your favorite dogs. Simply upload a photo and Rate-A-Dog will give you an algorithmically accurate rating of the pooch in question using the power of The Cloud.
+[![Rate A Dog!](https://github.com/mattdelsordo/Rate-A-Dog/blob/master/app/src/main/res/drawable-xhdpi/rate_a_dog_banner.png?raw=true)](https://play.google.com/store/apps/details?id=com.mdelsordo.rate_a_dog)
+
+## [Get it on the Google Play Store!](https://play.google.com/store/apps/details?id=com.mdelsordo.rate_a_dog)
+
+Rate-A-Dog is an Android app that uses AWS Rekognition to allow users to rate photos of dogs that they upload to the service. In practice this basically means using Rekognition to determine whether the photo contains a dog and then returning a rating of "Good", because, honestly, they're all good dogs. There is an edge case where dogs are rated "Bad" but the casual user probably won't encounter it.
